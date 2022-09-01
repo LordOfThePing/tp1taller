@@ -1,0 +1,5 @@
+/home/pepeflynn/Documentos/tp1taller/target/debug/deps/tp1taller-d12caa4846471f82.rmeta: src/main.rs
+
+/home/pepeflynn/Documentos/tp1taller/target/debug/deps/tp1taller-d12caa4846471f82.d: src/main.rs
+
+src/main.rs:
