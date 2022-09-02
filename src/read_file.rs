@@ -4,8 +4,8 @@ use std::io::prelude::*;
 use std::path::Path;
 
 
-pub fn read_file(args: Vec<String>) -> String{
-    let path = Path::new(&args[0]);
+pub fn read_file(args: &String) -> String{
+    let path = Path::new(args);
     let _display = path.display();
     let mut file = File::open(&path).expect("Error: File open");
     let mut contents = String::new();

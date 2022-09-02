@@ -9,6 +9,13 @@ fn main() {
 
     let args: Vec<String> = env::args().collect();
 
-    let _output: String = read_file(args);
+    if args.len() != 2 {
+        println!("Error: invalid arg count");
+    } else {
+        
+        let output: String = read_file(&args[1]);
+        println!("{:?}", output.as_bytes());
+
+    }
 
 }
