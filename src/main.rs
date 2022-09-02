@@ -9,6 +9,6 @@ fn main() {
 
     let args: Vec<String> = env::args().collect();
 
-    let output: String = read_file(args);
+    let _output: String = read_file(args);
 
 }
