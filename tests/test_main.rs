@@ -1,6 +1,2 @@
-
-
 #[test]
-fn sort_short() {
-
-}
+fn sort_short() {}
