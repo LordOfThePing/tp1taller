@@ -13,7 +13,7 @@ impl Cell {
             Cell::Bomb => 42,
             Cell::Empty => 46,
             Cell::Number(num) => {
-                u8::try_from(*num).expect("Error: not all integers can be shown with 'try_from()'")
+                u8::try_from(*num).expect("Error: not all integers can be shown with 'try_from()'") + 48
             }
         }
     }
