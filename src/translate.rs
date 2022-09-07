@@ -1,5 +1,7 @@
 
 
+
+
 use crate::cell::Cell; 
 
 pub fn translate(tab: &[u8]) -> Vec<u8>{
@@ -20,32 +22,35 @@ pub fn board_to_slice(board: Vec<Vec<Cell>>) -> Vec<u8> {
             vec.push(board[i][j].obtain_ascii());
             
         }
+        vec.push( 10 );
     }
 
     vec
 
 }
 
-pub fn board_translate(board: Vec<Vec<Cell>>) -> Vec<Vec<Cell>> {
+pub fn board_translate(mut board: Vec<Vec<Cell>>) -> Vec<Vec<Cell>> {
+
     for i in 0..board.len() {
+
         for j in 0..board[i].len() {
             if board[i][j] == Cell::Bomb {
-                if i > 0 {
-                    board[i-1][j].increase();
-                    if j > 0              {board[i-1][j-1].increase();}
-                    if j < board[i].len() {board[i-1][j+1].increase();}
+                if i > 0 {                              
+                    board[i-1][j] = board[i-1][j].increase();                                    
+                    if j > 0              {board[i-1][j-1] = board[i-1][j-1].increase();}
+                    if j < board[i].len() {board[i-1][j+1] = board[i-1][j+1].increase();}
                 }
                 
                 if j > 0 {
-                    board[i][j-1].increase();
+                    board[i][j-1] = board[i][j-1].increase();
                 }
                 if i < board.len(){
-                    board[i+1][j].increase();
-                    if j > 0              {board[i+1][j-1].increase();}
-                    if j < board[i].len() {board[i+1][j+1].increase();}
+                    board[i+1][j] = board[i+1][j].increase();
+                    if j > 0              {board[i+1][j-1] = board[i+1][j-1].increase();}
+                    if j < board[i].len() {board[i+1][j+1] = board[i+1][j+1].increase();}
                 }
                 if j < board[i].len(){
-                    board[i][j+1].increase();
+                    board[i][j+1] = board[i][j+1].increase();
                 }
             }
         }
