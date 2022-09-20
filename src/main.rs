@@ -11,19 +11,19 @@ fn main() {
         let out = output.as_bytes();
         let vec = translate(out);
         // let mut str = String::from_utf8( translate(out) ).expect("could not obtain String");
-        print_boards(&out, &vec);
+        print_boards(out, &vec);
     }
 }
 
 
 fn print_boards(out: &[u8], vec: &Vec<u8> ) {
     println!("INPUT");
-    for i in 0..out.len() {
-        print!(" {:}", (out[i]) as char);
+    for item in out {
+        print!(" {:}", (*item) as char);
     }
     print!("{}{}", 10u8 as char, 10u8 as char);
     println!("OUTPUT");
-    for i in 0..vec.len() {
-        print!(" {:}", (vec[i]) as char);
+    for item in vec {
+        print!(" {:}", (*item) as char);
     }
 }

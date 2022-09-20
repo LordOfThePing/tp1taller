@@ -3,7 +3,7 @@ use crate::cell::Cell;
 pub fn translate(tab: &[u8]) -> Vec<u8> {
     let len = length(tab).expect("Error: board too big");
     let lon = longitude(tab, &len).expect("Error: board not rectangular");
-    let mut board = board_init(len, lon, &tab).expect("Error: board has incorrect format");
+    let mut board = board_init(len, lon, tab).expect("Error: board has incorrect format");
     board = board_translate(board);
 
     board_to_slice(board)
@@ -11,9 +11,9 @@ pub fn translate(tab: &[u8]) -> Vec<u8> {
 
 pub fn board_to_slice(board: Vec<Vec<Cell>>) -> Vec<u8> {
     let mut vec: Vec<u8> = Vec::with_capacity(board.len() + board[0].len());
-    for i in 0..board.len() {
-        for j in 0..board[i].len() {
-            vec.push(board[i][j].obtain_ascii());
+    for row in board.iter() {
+        for cell in row.iter() {
+            vec.push(cell.obtain_ascii());
         }
         vec.push(10);
     }
@@ -56,7 +56,7 @@ pub fn board_translate(mut board: Vec<Vec<Cell>>) -> Vec<Vec<Cell>> {
     board
 }
 
-pub fn board_init(len: u8, lon: u8, tab: &[u8]) -> Result<Vec<Vec<Cell>>, ()> {
+pub fn board_init(len: u8, lon: u8, tab: &[u8]) -> Result<Vec<Vec<Cell>>, u8> {
     let mut board: Vec<Vec<Cell>> = Vec::new();
     for i in 0..lon {
         board.push(Vec::new());
@@ -64,7 +64,7 @@ pub fn board_init(len: u8, lon: u8, tab: &[u8]) -> Result<Vec<Vec<Cell>>, ()> {
             match tab[(j + (i * len)) as usize] {
                 42 => board[i as usize].push(Cell::Bomb),
                 46 => board[i as usize].push(Cell::Empty),
-                _ => return Err(()),
+                _ => return Err(1),
             }
         }
     }
@@ -72,8 +72,8 @@ pub fn board_init(len: u8, lon: u8, tab: &[u8]) -> Result<Vec<Vec<Cell>>, ()> {
 }
 
 fn length(tab: &[u8]) -> Result<u8, ()> {
-    for i in 0..tab.len() {
-        if tab[i] == 10 {
+    for (i, item) in tab.iter().enumerate() {
+        if *item == 10 {
             return Ok((i + 1) as u8);
         } else if i > 100 {
             return Err(());
@@ -83,8 +83,8 @@ fn length(tab: &[u8]) -> Result<u8, ()> {
 }
 
 pub fn longitude(tab: &[u8], len: &u8) -> Result<u8, u8> {
-    for i in 0..tab.len() {
-        if ((i + 1) as u8 % (*len) != 0) & (tab[i] == 10) {
+    for (i, item) in tab.iter().enumerate() {
+        if ((i + 1) as u8 % (*len) != 0) & (*item == 10) {
             return Err(1);
         }
     }
